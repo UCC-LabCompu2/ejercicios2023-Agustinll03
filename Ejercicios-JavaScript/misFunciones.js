@@ -6,7 +6,6 @@
  */
 
 let conversorUnidades = (id, valor) => {
-    //creacion de variables
     let met, pul, pie, yar;
 
     if(valor.includes(",")){
@@ -68,7 +67,6 @@ let convertirGR = (id) =>{
         gr = rad*180/Math.PI;
     }
 
-    //asignacion final
     document.getElementById("radianes").value = rad; 
     document.getElementById("grados").value = gr; 
 }
@@ -95,12 +93,46 @@ let mostrar_ocultar = (valor) =>{
  */
 
 let sumar = () =>{
-    let num1, num2, res;
-    // tarea que pasa si el usuario ingresa una letra 
-    num1 = document.getElementById("nums1").value;
-    num2 = document.getElementById("nums2").value; 
-    res = Number(num1) + Number(num2); 
-    document.getElementById("totalS").innerHTML = res; 
+    let num1, num2;
+    num1 = Number(document.getElementById("nums1").value);
+    num2 = Number(document.getElementById("nums2").value); 
+    document.getElementsByName("sum_total")[0].innerHTML = num1 + num2;
+}
+
+/**
+ * Resta dos valores ingresados por el usuario
+ * @method restar
+ */
+
+let restar = () =>{
+    let num1, num2;
+    num1 = Number(document.getElementById("numr1").value);
+    num2 = Number(document.getElementById("numr2").value); 
+    document.getElementsByName("res_total")[0].innerHTML = num1 - num2;
+}
+
+/**
+ * Multiplica dos valores ingresados por el usuario
+ * @method multiplicar
+ */
+
+let multiplicar = () =>{
+    let num1, num2;
+    num1 = Number(document.getElementById("numm1").value);
+    num2 = Number(document.getElementById("numm2").value); 
+    document.getElementsByName("mul_total")[0].innerHTML = num1 * num2;
+}
+
+/**
+ * Divide dos valores ingresados por el usuario
+ * @method dividir
+ */
+
+let dividir = () =>{
+    let num1, num2;
+    num1 = Number(document.getElementById("numd1").value);
+    num2 = Number(document.getElementById("numd2").value); 
+    document.getElementsByName("div_total")[0].innerHTML = num1 / num2;
 }
 
 /**
@@ -108,15 +140,11 @@ let sumar = () =>{
  * @method generarUrl
  */
 let generarUrl = () => {
-    const dist  = document.getElementById("distancia").value; 
-    const unid = document.getElementsByName("unidades")[0].value; 
-
-    console.log("La distacia es:"+dist); 
-    console.log("La unidad es:"+unid); 
-
-    const urlComp = 'segundaWeb.html#${dist}#${unid}';
-    //const urlComp = "segundaWeb.html#"+dist+"#"+unid;
-    window.open(urlComp, "_self"); 
+    let urlComp, cant, unidad;
+    cant = document.getElementById("distancia").value; 
+    unidad = document.getElementsByName("unidades")[0].value; 
+    urlComp = "segundaWeb.html#" + cant + "#" + unidad;
+    window.open(urlComp); 
 }
 
 /**
@@ -124,12 +152,11 @@ let generarUrl = () => {
  * @method cargarValores
  */
 let cargarValores = () =>{
-    let urlCompleta = window.location.href; 
-    urlCompleta = urlCompleta.split("#"); 
-
-    const distancia = urlCompleta[1]; 
-    const unidad = urlCompleta[2]; 
-    document.getElementById("dist").value = '${distancia} ${unidad}'; 
+    let urlComp, can, un;
+    urlComp = window.location.href.split("/")[5]; 
+    can = urlComp.split("#")[1]; 
+    un = urlComp.split("#")[2]; 
+    document.getElementById("dist").value = can + " " + un; 
 }
 
 /**
@@ -137,22 +164,24 @@ let cargarValores = () =>{
  * @method guardarDatosLS
  */
 let guardarDatosLS = () =>{
-    const dist  = document.getElementById("distancia").value; 
-    const unid = document.getElementsByName("unidades")[0].value; 
-
+    let dist, unid;
+    dist  = document.getElementById('distancia').value; 
+    unid = document.getElementsByName('unidades')[0].value; 
     localStorage.setItem("distanciaLS", dist); 
     localStorage.setItem("unidadesLS", unid); 
-    window.open("web2.html"); 
+    window.open("2_web.html"); 
 }
 
 /**
  * Obtiene datos del almacenamiento local del navegador y los asigna a elementos del documento.
- * @method tomarDatosLS
+ * @method cargarDatosLS
  */
-let tomarDatosLS = () =>{
-    const cant = localStorage.getItem("dintanciaLS"); 
-    const unid = localStorage.getItem("unidadesLS"); 
-    document.getElementById("dist").value = '${cant} ${unid}'; 
+let cargarDatosLS = () =>{
+    let cant, un;
+    cant = localStorage.getItem("dintanciaLS"); 
+    un = localStorage.getItem("unidadesLS"); 
+
+    document.getElementById("dist").value = cant + " " + un; 
 }
 
 /**
@@ -167,7 +196,7 @@ let dibujarCirculoCuadrado = () =>{
     const alturaMax = canvas.height;
 
     ctx.beginPath(); 
-    ctx.fillStyle = "#851414"; 
+    ctx.fillStyle = "#748900"; 
     ctx.arc(anchoMax/2,alturaMax/2,100,0,2*Math.PI); 
     ctx.stroke(); 
     ctx.fill(); 
@@ -175,7 +204,7 @@ let dibujarCirculoCuadrado = () =>{
 
     const margen = 8; 
     ctx.beginPath();
-    ctx.fillStyle = "#394554"; 
+    ctx.fillStyle = "#689"; 
     ctx.fillRect(0+margen,alturaMax-100-margen,150,100);
     ctx.fill(); 
     ctx.stroke(); 
@@ -233,7 +262,7 @@ let dibujarCuadriculado = () =>{
         ctx.beginPath(); 
         ctx.moveTo(i,0); 
         ctx.lineTo(i,alturaMax); 
-        ctx.strokeStyle = "#333"; 
+        ctx.strokeStyle = "##D8D8D8"; 
         ctx.stroke(); 
         ctx.font="10pt Verdana";
         ctx.fillStyle = "blue";
@@ -246,7 +275,7 @@ let dibujarCuadriculado = () =>{
         ctx.beginPath(); 
         ctx.moveTo(0,i); 
         ctx.lineTo(anchoMax,i); 
-        ctx.strokeStyle = "#333"; 
+        ctx.strokeStyle = "##D8D8D8"; 
         ctx.stroke(); 
         ctx.font="10pt Verdana";
         ctx.fillStyle = "blue";
@@ -259,14 +288,15 @@ let dibujarCuadriculado = () =>{
     ctx.beginPath(); 
     ctx.moveTo(0,alturaMax/2); 
     ctx.lineTo(anchoMax,alturaMax/2); 
-    ctx.strokeStyle = "#6b0a0a"; 
+    ctx.strokeStyle = "#FA5858"; 
     ctx.stroke(); 
     ctx.closePath(); 
+
     //ejey
     ctx.beginPath(); 
     ctx.moveTo(anchoMax/2,0); 
     ctx.lineTo(anchoMax/2,alturaMax); 
-    ctx.strokeStyle = "#6b0a0a"; 
+    ctx.strokeStyle = "#FA5858"; 
     ctx.stroke(); 
     ctx.closePath(); 
 }
@@ -336,6 +366,7 @@ let animarAuto = () =>{
    if(x>=canvas.width){
     x=0; 
    }
+   
 }
 
 /**

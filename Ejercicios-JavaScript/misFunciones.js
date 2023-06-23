@@ -178,7 +178,7 @@ let guardarDatosLS = () =>{
  */
 let cargarDatosLS = () =>{
     let cant, un;
-    cant = localStorage.getItem("dintanciaLS"); 
+    cant = localStorage.getItem("distanciaLS"); 
     un = localStorage.getItem("unidadesLS"); 
 
     document.getElementById("dist").value = cant + " " + un; 
